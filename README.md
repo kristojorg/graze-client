@@ -8,6 +8,10 @@ npm install graze-client
 
 It is a bit hastily put together and under development (not all APIs are implemented), but it works. There currently is no bundled code, it is just source Typescript code. You may need to configure your build system or bundler to bundle this for you. If you are using this in a Node.js environment, you can use [tsx](https://github.com/esbuild-kit/tsx) to run the typescript code like regular JS, or you can use [bun](https://bun.sh/).
 
+## Usage
+
+**Authentication** is currently cookie-based and a little hacky. You will need to log into Graze in your browser, then copy the cookie from your browser's developer tools, and pass it as a string to the `GrazeService`.
+
 There are two exports:
 
 ### 1. A promise-based `GrazeService`
