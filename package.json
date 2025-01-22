@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "license": "MIT",
-  "description": "A basic Effect package",
+  "description": "A Typescript Graze API client.",
   "repository": {
     "type": "git",
     "url": "https://github.com/kristojorg/graze-client"
