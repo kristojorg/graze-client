@@ -2,6 +2,8 @@
 
 This is a simple Typescript package for interacting with the [Graze](https://graze.social/) API. The API is undocumented and not officially supported, but this package was made with their blessing.
 
+It is a bit hastily put together and under development (not all APIs are implemented), but it works.
+
 There are two exports:
 
 ### 1. A promise-based `GrazeService`
