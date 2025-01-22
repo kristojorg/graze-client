@@ -12,6 +12,7 @@ export class GrazeService {
   getFeeds: Promisify<typeof GrazeClient.Service.getFeeds>;
   hidePost: Promisify<typeof GrazeClient.Service.hidePost>;
   updateAlgorithm: Promisify<typeof GrazeClient.Service.updateAlgorithm>;
+  publishAlgorithm: Promisify<typeof GrazeClient.Service.publishAlgorithm>;
 
   constructor({
     apiUrl,
@@ -38,6 +39,7 @@ export class GrazeService {
     this.getFeeds = api.getFeeds;
     this.hidePost = api.hidePost;
     this.updateAlgorithm = api.updateAlgorithm;
+    this.publishAlgorithm = api.publishAlgorithm;
   }
 }
 
@@ -52,17 +54,15 @@ const setup = Effect.gen(function* () {
   const updateAlgorithm = (
     ...args: Parameters<typeof client.updateAlgorithm>
   ) => client.updateAlgorithm(...args).pipe(Effect.runPromise);
+  const publishAlgorithm = (
+    ...args: Parameters<typeof client.publishAlgorithm>
+  ) => client.publishAlgorithm(...args).pipe(Effect.runPromise);
 
   return {
     getFeed,
     getFeeds,
     hidePost,
     updateAlgorithm,
+    publishAlgorithm,
   };
-});
-
-const graze = new GrazeService({
-  apiUrl: "http://localhost:3000",
-  cookie: "cookie",
-  userId: 1,
 });
