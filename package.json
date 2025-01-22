@@ -12,6 +12,23 @@
     "access": "public",
     "directory": "dist"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/dts/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./effect": {
+      "types": "./dist/dts/GrazeClient.d.ts",
+      "import": "./dist/esm/GrazeClient.js",
+      "default": "./dist/cjs/GrazeClient.js"
+    },
+    "./schema": {
+      "types": "./dist/dts/schema/index.d.ts",
+      "import": "./dist/esm/schema/index.js",
+      "default": "./dist/cjs/schema/index.js"
+    }
+  },
   "scripts": {
     "codegen": "build-utils prepare-v2",
     "build": "bun build-esm && bun build-annotate && bun build-cjs && build-utils pack-v2",
