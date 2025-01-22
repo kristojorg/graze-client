@@ -23,7 +23,7 @@
     "lint-fix": "bun lint --fix",
     "test": "vitest",
     "coverage": "vitest --coverage",
-    "changeset-version": "changeset version && node scripts/version.mjs",
+    "changeset-version": "changeset version",
     "changeset-publish": "bun build && TEST_DIST= bun vitest && changeset publish"
   },
   "dependencies": {
