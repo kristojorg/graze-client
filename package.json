@@ -20,16 +20,16 @@
   ],
   "exports": {
     ".": {
-      "import": "./build/esm/index.ts",
-      "require": "./build/dts/index.d.ts"
+      "import": "./build/esm/index.js",
+      "types": "./build/dts/index.d.ts"
     },
     "./effect": {
-      "import": "./build/esm/effect/index.ts",
-      "require": "./build/dts/effect/index.d.ts"
+      "import": "./build/esm/GrazeClient.js",
+      "types": "./build/dts/GrazeClient.d.ts"
     },
     "./schema": {
-      "import": "./build/esm/schema/index.ts",
-      "require": "./build/dts/schema/index.d.ts"
+      "import": "./build/esm/schema/index.js",
+      "types": "./build/dts/schema/index.d.ts"
     }
   },
   "scripts": {
