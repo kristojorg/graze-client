@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.2.2
+
+### Patch Changes
+
+- b0b2081: fix exports
+
 ## 0.2.1
 
 ### Patch Changes
