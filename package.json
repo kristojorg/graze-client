@@ -13,9 +13,18 @@
     "directory": "."
   },
   "exports": {
-    ".": "./src/index.ts",
-    "./effect": "./src/GrazeClient.ts",
-    "./schema": "./src/schema/index.ts"
+    ".": {
+      "import": "./build/esm/index.ts",
+      "require": "./build/dts/index.d.ts"
+    },
+    "./effect": {
+      "import": "./build/esm/effect/index.ts",
+      "require": "./build/dts/effect/index.d.ts"
+    },
+    "./schema": {
+      "import": "./build/esm/schema/index.ts",
+      "require": "./build/dts/schema/index.d.ts"
+    }
   },
   "scripts": {
     "codegen": "build-utils prepare-v2",
@@ -78,5 +87,6 @@
   "patchedDependencies": {
     "@changesets/get-github-info@0.6.0": "patches/@changesets__get-github-info@0.6.0.patch",
     "babel-plugin-annotate-pure-calls@0.4.0": "patches/babel-plugin-annotate-pure-calls@0.4.0.patch"
-  }
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
