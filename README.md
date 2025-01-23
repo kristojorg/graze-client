@@ -6,7 +6,7 @@ This is a simple Typescript package for interacting with the [Graze](https://gra
 npm install graze-client
 ```
 
-It is a bit hastily put together and under development (not all APIs are implemented), but it works. There currently is no bundled code, it is just source Typescript code. You may need to configure your build system or bundler to bundle this for you. If you are using this in a Node.js environment, you can use [tsx](https://github.com/esbuild-kit/tsx) to run the typescript code like regular JS, or you can use [bun](https://bun.sh/).
+It is a bit hastily put together and under development (not all APIs are implemented), but it works. Currently it is only deployed as ESM with Typescript declarations.
 
 ## Usage
 
