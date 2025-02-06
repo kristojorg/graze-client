@@ -16,7 +16,7 @@ export const AttributeName = S.Union(
   S.Literal("embed.external.description")
 );
 export type AttributeName = typeof AttributeName.Type;
-export const AttributeComparison = S.Literal("==");
+export const AttributeComparison = S.Literal("==", "!=", ">", "<", ">=", "<=");
 export type AttributeComparison = typeof AttributeComparison.Type;
 export const AttributeValue = S.Null;
 export type AttributeValue = typeof AttributeValue.Type;
