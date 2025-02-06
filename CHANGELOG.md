@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.2.3
+
+### Patch Changes
+
+- e15a669: Added new attribute compare blocks
+
 ## 0.2.2
 
 ### Patch Changes
