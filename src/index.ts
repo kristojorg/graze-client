@@ -1,5 +1,5 @@
 import { ConfigProvider, Effect, Layer } from "effect";
-import { GrazeClient } from "src/GrazeClient.js";
+import { GrazeClient } from "./GrazeClient.js";
 
 type Promisify<T> = T extends (
   ...args: any[]
