@@ -38,7 +38,7 @@
   },
   "scripts": {
     "codegen": "build-utils prepare-v2",
-    "build": "rm -rf build && bun run build-esm",
+    "build": "rm -rf build && rm -rf .tsbuildinfo && bun run build-esm",
     "build-esm": "tsc -b tsconfig.build.json",
     "check": "tsc -b tsconfig.json",
     "lint": "eslint \"**/{src,test,examples,scripts,dtslint}/**/*.{ts,mjs}\"",
