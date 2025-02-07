@@ -32,8 +32,8 @@
       "types": "./build/dts/schema/index.d.ts"
     },
     "./builder": {
-      "import": "./build/esm/builder/index.js",
-      "types": "./build/dts/builder/index.d.ts"
+      "import": "./build/esm/builder.js",
+      "types": "./build/dts/builder.d.ts"
     }
   },
   "scripts": {
