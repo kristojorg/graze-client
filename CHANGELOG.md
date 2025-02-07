@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.3.1
+
+### Patch Changes
+
+- fix absolute imports (ugh typescript)
+
 ## 0.3.0
 
 ### Minor Changes
