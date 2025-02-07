@@ -1,5 +1,12 @@
 # graze-client
 
+## 0.3.0
+
+### Minor Changes
+
+- Add social graph block
+- 76d7cbc: Added a fluent builder api for constructing algorithms more expressively
+
 ## 0.2.4
 
 ### Patch Changes
