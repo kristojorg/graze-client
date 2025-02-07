@@ -44,7 +44,7 @@
     "test": "vitest",
     "coverage": "vitest --coverage",
     "changeset-version": "changeset version",
-    "changeset-publish": "bun build && TEST_DIST= bun vitest && changeset publish"
+    "changeset-publish": "bun run build && TEST_DIST= bun vitest --run && changeset publish"
   },
   "dependencies": {
     "@effect/platform": "^0.75.1",
