@@ -66,3 +66,5 @@ const setup = Effect.gen(function* () {
     publishAlgorithm,
   };
 });
+
+export { F, Algo } from "./builder.js";
