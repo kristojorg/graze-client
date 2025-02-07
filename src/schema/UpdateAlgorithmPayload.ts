@@ -32,7 +32,8 @@ export type Filter =
   | RegexNegationMatches
   | ContentModerationBlock
   | EntityExcludesLabels
-  | EmbedType;
+  | EmbedType
+  | SocialGraph;
 
 export type And = Readonly<{ and: ReadonlyArray<Filter> }>;
 export type Or = Readonly<{ or: ReadonlyArray<Filter> }>;
@@ -64,6 +65,9 @@ export type EmbedType = Readonly<{
     "video" | "image" | "link" | "post" | "gif" | "image_group"
   ];
 }>;
+export type SocialGraph = Readonly<{
+  social_graph: readonly [string, "in" | "not_in", "follows" | "followers"];
+}>;
 
 export const Filter = S.Union(
   S.suspend((): S.Schema<And> => And),
@@ -74,7 +78,8 @@ export const Filter = S.Union(
   S.suspend((): S.Schema<RegexNegationMatches> => RegexNegationMatches),
   S.suspend((): S.Schema<ContentModerationBlock> => ContentModerationBlock),
   S.suspend((): S.Schema<EntityExcludesLabels> => EntityExcludesLabels),
-  S.suspend((): S.Schema<EmbedType> => EmbedType)
+  S.suspend((): S.Schema<EmbedType> => EmbedType),
+  S.suspend((): S.Schema<SocialGraph> => SocialGraph)
 );
 
 export const Or = S.Struct({ or: S.Array(Filter) });
@@ -126,6 +131,13 @@ export const EmbedType = S.Struct({
   embed_type: S.Tuple(
     S.Literal("==", "!="),
     S.Literal("video", "image", "link", "post", "gif", "image_group")
+  ),
+});
+export const SocialGraph = S.Struct({
+  social_graph: S.Tuple(
+    S.String,
+    S.Literal("in", "not_in"),
+    S.Literal("follows", "followers")
   ),
 });
 

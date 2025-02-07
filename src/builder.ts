@@ -7,6 +7,7 @@ import {
   ListMemberFilter,
   RegexMatches,
   RegexNegationMatches,
+  SocialGraph,
 } from "./schema/index.js";
 
 const and = (...filters: Filter[]) => {
@@ -53,9 +54,26 @@ const isListMember = (uri: string): ListMemberFilter => ({
 const isNotListMember = (uri: string): ListMemberFilter => ({
   list_member: [uri, "not_in"],
 });
+const socialGraph = (
+  identifier: string,
+  op: SocialGraph["social_graph"][1],
+  relation: SocialGraph["social_graph"][2]
+): SocialGraph => ({
+  social_graph: [identifier, op, relation],
+});
+const posterIsFollowedBy = (identifier: string) =>
+  socialGraph(identifier, "in", "followers");
+const posterFollows = (identifier: string) =>
+  socialGraph(identifier, "in", "follows");
+const posterIsNotFollowedBy = (identifier: string) =>
+  socialGraph(identifier, "not_in", "followers");
+const posterDoesNotFollow = (identifier: string) =>
+  socialGraph(identifier, "not_in", "follows");
+
 const hasVideo: Filter = {
   embed_type: ["==", "video"],
 };
+
 const hasNoNSFWLabels: Filter = {
   entity_excludes: ["labels", ["porn", "sexual", "nudity"]],
 };
@@ -88,6 +106,11 @@ export const F = {
   attributeCompare,
   isListMember,
   isNotListMember,
+  socialGraph,
+  posterIsFollowedBy,
+  posterFollows,
+  posterIsNotFollowedBy,
+  posterDoesNotFollow,
   hasVideo,
   hasNoNSFWLabels,
   isPost,
