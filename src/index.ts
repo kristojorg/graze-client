@@ -31,8 +31,8 @@ export class GrazeService {
     const provider = ConfigProvider.fromMap(envMap);
     const layer = Layer.setConfigProvider(provider);
     const make = setup.pipe(
-      Effect.provide(layer),
-      Effect.provide(GrazeClient.Default)
+      Effect.provide(GrazeClient.Default),
+      Effect.provide(layer)
     );
     const api = Effect.runSync(make);
     this.getFeed = api.getFeed;
