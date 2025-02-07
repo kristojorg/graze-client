@@ -1,6 +1,6 @@
 {
   "name": "graze-client",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "license": "MIT",
   "description": "A Typescript Graze API client.",
