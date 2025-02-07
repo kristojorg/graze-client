@@ -4,7 +4,8 @@
 
 ### Patch Changes
 
-- e15a669: Added new attribute compare blocks
+- e15a669: Added new attribute comparison operators "!=" etc...
+- f82930c: Fixed order of layers so that passed in env vars are used instead of looking in the environment. - thanks @derekvanvliet!
 
 ## 0.2.2
 
