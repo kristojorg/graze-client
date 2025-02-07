@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.3.4
+
+### Patch Changes
+
+- export everything from index
+
 ## 0.3.3
 
 ### Patch Changes
