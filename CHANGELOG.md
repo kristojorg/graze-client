@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.3.2
+
+### Patch Changes
+
+- Fix build script
+
 ## 0.3.1
 
 ### Patch Changes
