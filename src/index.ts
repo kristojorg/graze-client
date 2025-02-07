@@ -67,4 +67,5 @@ const setup = Effect.gen(function* () {
   };
 });
 
+export * from "./schema/index.js";
 export { F, Algo } from "./builder.js";
