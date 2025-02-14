@@ -55,6 +55,12 @@ export const HidePostBody = S.Struct({
 });
 export type HidePostBody = typeof HidePostBody.Type;
 
+export const UnhidePostBody = S.Struct({
+  algo_id: S.Number,
+  at_uri: S.String,
+});
+export type UnhidePostBody = typeof UnhidePostBody.Type;
+
 // ----------------------- Get Algorithms Response -----------------------
 
 export const AlgorithWithStats = S.Struct({

@@ -11,6 +11,7 @@ export class GrazeService {
   getFeed: Promisify<typeof GrazeClient.Service.getFeed>;
   getFeeds: Promisify<typeof GrazeClient.Service.getFeeds>;
   hidePost: Promisify<typeof GrazeClient.Service.hidePost>;
+  unhidePost: Promisify<typeof GrazeClient.Service.unhidePost>;
   updateAlgorithm: Promisify<typeof GrazeClient.Service.updateAlgorithm>;
   publishAlgorithm: Promisify<typeof GrazeClient.Service.publishAlgorithm>;
 
@@ -38,6 +39,7 @@ export class GrazeService {
     this.getFeed = api.getFeed;
     this.getFeeds = api.getFeeds;
     this.hidePost = api.hidePost;
+    this.unhidePost = api.unhidePost;
     this.updateAlgorithm = api.updateAlgorithm;
     this.publishAlgorithm = api.publishAlgorithm;
   }
@@ -51,6 +53,8 @@ const setup = Effect.gen(function* () {
     client.getFeeds(...args).pipe(Effect.runPromise);
   const hidePost = (...args: Parameters<typeof client.hidePost>) =>
     client.hidePost(...args).pipe(Effect.runPromise);
+  const unhidePost = (...args: Parameters<typeof client.unhidePost>) =>
+    client.unhidePost(...args).pipe(Effect.runPromise);
   const updateAlgorithm = (
     ...args: Parameters<typeof client.updateAlgorithm>
   ) => client.updateAlgorithm(...args).pipe(Effect.runPromise);
@@ -62,6 +66,7 @@ const setup = Effect.gen(function* () {
     getFeed,
     getFeeds,
     hidePost,
+    unhidePost,
     updateAlgorithm,
     publishAlgorithm,
   };
