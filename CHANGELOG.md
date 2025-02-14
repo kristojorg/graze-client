@@ -1,5 +1,43 @@
 # graze-client
 
+## 0.3.4
+
+### Patch Changes
+
+- export everything from index
+
+## 0.3.3
+
+### Patch Changes
+
+- 0695452: fix builder import
+
+## 0.3.2
+
+### Patch Changes
+
+- Fix build script
+
+## 0.3.1
+
+### Patch Changes
+
+- fix absolute imports (ugh typescript)
+
+## 0.3.0
+
+### Minor Changes
+
+- Add social graph block
+- 76d7cbc: Added a fluent builder api for constructing algorithms more expressively
+
+## 0.2.4
+
+### Patch Changes
+
+- e15a669: Added new attribute comparison operators "!=" etc...
+- f82930c: Fixed order of layers so that passed in env vars are used instead of looking in the environment. - thanks @derekvanvliet!
+
 ## 0.2.2
 
 ### Patch Changes

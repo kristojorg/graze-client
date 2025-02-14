@@ -1,5 +1,5 @@
 import { ConfigProvider, Effect, Layer } from "effect";
-import { GrazeClient } from "src/GrazeClient.js";
+import { GrazeClient } from "./GrazeClient.js";
 
 type Promisify<T> = T extends (
   ...args: any[]
@@ -66,3 +66,6 @@ const setup = Effect.gen(function* () {
     publishAlgorithm,
   };
 });
+
+export * from "./schema/index.js";
+export { F, Algo } from "./builder.js";
