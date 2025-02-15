@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.4.0
+
+### Minor Changes
+
+- Added unhide_post API - thanks @derekvv
+
 ## 0.3.4
 
 ### Patch Changes
