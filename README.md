@@ -60,7 +60,7 @@ const algo = Algo.filter(
   hasNoBadContent,
   F.hasVideo,
   F.or(
-    F.posterFollows("@samuel.bsky.team"),
+    F.posterFollows("samuel.bsky.team"),
     F.isListMember("my-whitelist-url"),
     F.and(
       F.regexMatches("text", "my-keyword-regex"),
