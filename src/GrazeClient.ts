@@ -3,6 +3,7 @@ import {
   GetAlgoResponse,
   GetAlgorithmsResponse,
   HidePostBody,
+  UnhidePostBody,
 } from "./schema/shared.js";
 import {
   FetchHttpClient,
@@ -68,6 +69,11 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
   .add(
     HttpApiEndpoint.post("hidePost")`/app/hide_post`
       .setPayload(HidePostBody)
+      .addSuccess(Schema.Unknown)
+  )
+  .add(
+    HttpApiEndpoint.post("unhidePost")`/app/unhide_post`
+      .setPayload(UnhidePostBody)
       .addSuccess(Schema.Unknown)
   );
 
