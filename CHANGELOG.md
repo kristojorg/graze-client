@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.6.0
+
+### Minor Changes
+
+- Add TextMatchesAny and TextMatchesNone nodes
+
 ## 0.5.0
 
 ### Minor Changes
