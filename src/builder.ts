@@ -162,6 +162,8 @@ export const F = {
   posterDoesNotFollow,
   hasVideo,
   hasNoNSFWLabels,
+  postTypeIs,
+  postTypeIsNot,
   isPost,
   isReply,
   isQuote,
