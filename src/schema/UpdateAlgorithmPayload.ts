@@ -51,7 +51,7 @@ export type Filter =
 export type And = Readonly<{ and: ReadonlyArray<Filter> }>;
 export type Or = Readonly<{ or: ReadonlyArray<Filter> }>;
 export type PostTypeFilter = Readonly<{
-  post_type: readonly ["in" | "not_in", PostType];
+  post_type: readonly ["in" | "not_in", ReadonlyArray<PostType>];
 }>;
 export type ListMemberFilter = Readonly<{
   list_member: readonly [ListUri, "in" | "not_in"];
@@ -110,7 +110,7 @@ export const Filter = S.Union(
 export const Or = S.Struct({ or: S.Array(Filter) });
 export const And = S.Struct({ and: S.Array(Filter) });
 export const PostTypeFilter = S.Struct({
-  post_type: S.Tuple(S.Literal("in", "not_in"), PostType),
+  post_type: S.Tuple(S.Literal("in", "not_in"), S.Array(PostType)),
 });
 export const ListMemberFilter = S.Struct({
   list_member: S.Tuple(ListUri, S.Literal("in", "not_in")),
