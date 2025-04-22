@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.6.3
+
+### Patch Changes
+
+- Add `postTypeIs` and `postTypeIsNot` to builder
+
 ## 0.6.2
 
 ### Patch Changes
