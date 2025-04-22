@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.6.4
+
+### Patch Changes
+
+- Fix published package
+
 ## 0.6.3
 
 ### Patch Changes
