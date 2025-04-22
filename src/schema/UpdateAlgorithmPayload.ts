@@ -20,6 +20,8 @@ export const AttributeComparison = S.Literal("==", "!=", ">", "<", ">=", "<=");
 export type AttributeComparison = typeof AttributeComparison.Type;
 export const AttributeValue = S.Null;
 export type AttributeValue = typeof AttributeValue.Type;
+export const PostType = S.Literal("reply", "quote");
+export type PostType = typeof PostType.Type;
 
 // ------------------- Filters ------------------------------------
 
@@ -33,10 +35,14 @@ export type Filter =
   | ContentModerationBlock
   | EntityExcludesLabels
   | EmbedType
-  | SocialGraph;
+  | SocialGraph
+  | PostTypeFilter;
 
 export type And = Readonly<{ and: ReadonlyArray<Filter> }>;
 export type Or = Readonly<{ or: ReadonlyArray<Filter> }>;
+export type PostTypeFilter = Readonly<{
+  post_type: readonly ["in" | "not_in", PostType];
+}>;
 export type ListMemberFilter = Readonly<{
   list_member: readonly [ListUri, "in" | "not_in"];
 }>;
@@ -79,11 +85,15 @@ export const Filter = S.Union(
   S.suspend((): S.Schema<ContentModerationBlock> => ContentModerationBlock),
   S.suspend((): S.Schema<EntityExcludesLabels> => EntityExcludesLabels),
   S.suspend((): S.Schema<EmbedType> => EmbedType),
-  S.suspend((): S.Schema<SocialGraph> => SocialGraph)
+  S.suspend((): S.Schema<SocialGraph> => SocialGraph),
+  S.suspend((): S.Schema<PostTypeFilter> => PostTypeFilter)
 );
 
 export const Or = S.Struct({ or: S.Array(Filter) });
 export const And = S.Struct({ and: S.Array(Filter) });
+export const PostTypeFilter = S.Struct({
+  post_type: S.Tuple(S.Literal("in", "not_in"), PostType),
+});
 export const ListMemberFilter = S.Struct({
   list_member: S.Tuple(ListUri, S.Literal("in", "not_in")),
 });

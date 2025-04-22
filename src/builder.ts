@@ -3,8 +3,10 @@ import {
   AttributeName,
   AttributeValue,
   ContentModerationBlock,
+  EmbedType,
   Filter,
   ListMemberFilter,
+  PostTypeFilter,
   RegexMatches,
   RegexNegationMatches,
   SocialGraph,
@@ -70,9 +72,21 @@ const posterIsNotFollowedBy = (identifier: string) =>
 const posterDoesNotFollow = (identifier: string) =>
   socialGraph(identifier, "not_in", "follows");
 
-const hasVideo: Filter = {
-  embed_type: ["==", "video"],
-};
+const embedContains = (type: EmbedType["embed_type"][1]): Filter => ({
+  embed_type: ["==", type],
+});
+const embedDoesNotContain = (type: EmbedType["embed_type"][1]): Filter => ({
+  embed_type: ["!=", type],
+});
+
+const postTypeIs = (type: PostTypeFilter["post_type"][1]): Filter => ({
+  post_type: ["in", type],
+});
+const postTypeIsNot = (type: PostTypeFilter["post_type"][1]): Filter => ({
+  post_type: ["not_in", type],
+});
+
+const hasVideo: Filter = embedContains("video");
 
 const hasNoNSFWLabels: Filter = {
   entity_excludes: ["labels", ["porn", "sexual", "nudity"]],
@@ -85,8 +99,11 @@ const attributeCompare = (
   attribute_compare: [attr, op, value],
 });
 
-const isPost: Filter = attributeCompare("reply", "==", null);
-const isReply: Filter = attributeCompare("reply", "!=", null);
+const isPost: Filter = postTypeIsNot("reply");
+const isReply: Filter = postTypeIs("reply");
+const isQuote: Filter = postTypeIs("quote");
+const isNotReply: Filter = postTypeIsNot("reply");
+const isNotQuote: Filter = postTypeIsNot("quote");
 
 const isContentOk = (threshold: number = 0.9): ContentModerationBlock => ({
   content_moderation: ["OK", ">=", threshold],
@@ -115,5 +132,10 @@ export const F = {
   hasNoNSFWLabels,
   isPost,
   isReply,
+  isQuote,
+  isNotReply,
+  isNotQuote,
   isContentOk,
+  embedContains,
+  embedDoesNotContain,
 };
