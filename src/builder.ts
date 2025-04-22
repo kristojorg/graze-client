@@ -10,6 +10,8 @@ import {
   RegexMatches,
   RegexNegationMatches,
   SocialGraph,
+  TextMatchesAny,
+  TextMatchesNone,
 } from "./schema/index.js";
 
 const and = (...filters: Filter[]) => {
@@ -48,6 +50,34 @@ const regexNegationMatches = (
   regex: string
 ): RegexNegationMatches => ({
   regex_negation_matches: [attribute, regex, true],
+});
+
+const textMatchesAny = ({
+  attribute,
+  patterns,
+  caseInsensitive = true,
+  useRegex = false,
+}: {
+  attribute: AttributeName;
+  patterns: string[];
+  caseInsensitive?: boolean;
+  useRegex?: boolean;
+}): TextMatchesAny => ({
+  regex_any: [attribute, patterns, caseInsensitive, useRegex],
+});
+
+const textMatchesNone = ({
+  attribute,
+  patterns,
+  caseInsensitive = true,
+  useRegex = false,
+}: {
+  attribute: AttributeName;
+  patterns: string[];
+  caseInsensitive?: boolean;
+  useRegex?: boolean;
+}): TextMatchesNone => ({
+  regex_none: [attribute, patterns, caseInsensitive, useRegex],
 });
 
 const isListMember = (uri: string): ListMemberFilter => ({
@@ -120,6 +150,8 @@ export const F = {
   or,
   regexMatches,
   regexNegationMatches,
+  textMatchesAny,
+  textMatchesNone,
   attributeCompare,
   isListMember,
   isNotListMember,

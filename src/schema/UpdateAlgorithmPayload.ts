@@ -13,7 +13,15 @@ export const AttributeName = S.Union(
   S.Literal("embed"),
   S.Literal("embed.external.uri"),
   S.Literal("embed.external.title"),
-  S.Literal("embed.external.description")
+  S.Literal("embed.external.description"),
+  S.Literal("embed.images[*].alt"),
+  S.Literal("embed.media.external.uri"),
+  S.Literal("embed.media.external.title"),
+  S.Literal("embed.media.external.description"),
+  S.Literal("embed.record.uri"),
+  S.Literal("langs[*"),
+  S.Literal("labels.values[*].val"),
+  S.Literal("facets[*].features[*].uri")
 );
 export type AttributeName = typeof AttributeName.Type;
 export const AttributeComparison = S.Literal("==", "!=", ">", "<", ">=", "<=");
@@ -32,6 +40,8 @@ export type Filter =
   | AttributeCompare
   | RegexMatches
   | RegexNegationMatches
+  | TextMatchesAny
+  | TextMatchesNone
   | ContentModerationBlock
   | EntityExcludesLabels
   | EmbedType
@@ -59,6 +69,12 @@ export type RegexMatches = Readonly<{
 export type RegexNegationMatches = Readonly<{
   regex_negation_matches: readonly [AttributeName, string, boolean];
 }>;
+export type TextMatchesAny = Readonly<{
+  regex_any: readonly [AttributeName, readonly string[], boolean, boolean];
+}>;
+export type TextMatchesNone = Readonly<{
+  regex_none: readonly [AttributeName, readonly string[], boolean, boolean];
+}>;
 export type ContentModerationBlock = Readonly<{
   content_moderation: readonly ["OK", ">=", number];
 }>;
@@ -82,6 +98,8 @@ export const Filter = S.Union(
   S.suspend((): S.Schema<AttributeCompare> => AttributeCompare),
   S.suspend((): S.Schema<RegexMatches> => RegexMatches),
   S.suspend((): S.Schema<RegexNegationMatches> => RegexNegationMatches),
+  S.suspend((): S.Schema<TextMatchesAny> => TextMatchesAny),
+  S.suspend((): S.Schema<TextMatchesNone> => TextMatchesNone),
   S.suspend((): S.Schema<ContentModerationBlock> => ContentModerationBlock),
   S.suspend((): S.Schema<EntityExcludesLabels> => EntityExcludesLabels),
   S.suspend((): S.Schema<EmbedType> => EmbedType),
@@ -120,6 +138,28 @@ export const RegexMatches = S.Struct({
 });
 export const RegexNegationMatches = S.Struct({
   regex_negation_matches: RegexMatchBase,
+});
+const TextMatchBase = S.Tuple(
+  AttributeName,
+  S.Array(S.String).annotations({
+    title: "Text Patterns",
+    description: "List of possible text patterns to match against.",
+  }),
+  S.Boolean.annotations({
+    title: "Case Insensitive?",
+    description: "True if the matching should be case insensitive.",
+  }),
+  S.Boolean.annotations({
+    title: "Use Regex?",
+    description:
+      "True if the values should be treated as regex patterns, false for literal strings.",
+  })
+);
+export const TextMatchesAny = S.Struct({
+  regex_any: TextMatchBase,
+});
+export const TextMatchesNone = S.Struct({
+  regex_none: TextMatchBase,
 });
 export const ContentModerationBlock = S.Struct({
   content_moderation: S.Tuple(
