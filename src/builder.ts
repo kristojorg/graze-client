@@ -109,11 +109,11 @@ const embedDoesNotContain = (type: EmbedType["embed_type"][1]): Filter => ({
   embed_type: ["!=", type],
 });
 
-const postTypeIs = (type: PostTypeFilter["post_type"][1]): Filter => ({
-  post_type: ["in", type],
+const postTypeIs = (...types: PostTypeFilter["post_type"][1]): Filter => ({
+  post_type: ["in", types],
 });
-const postTypeIsNot = (type: PostTypeFilter["post_type"][1]): Filter => ({
-  post_type: ["not_in", type],
+const postTypeIsNot = (...types: PostTypeFilter["post_type"][1]): Filter => ({
+  post_type: ["not_in", types],
 });
 
 const hasVideo: Filter = embedContains("video");
