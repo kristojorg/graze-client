@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.6.2
+
+### Patch Changes
+
+- Fix post type filter block
+
 ## 0.6.1
 
 ### Patch Changes
