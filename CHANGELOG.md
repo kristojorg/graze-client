@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.5.0
+
+### Minor Changes
+
+- Added post type and embed type filters to builder
+
 ## 0.4.0
 
 ### Minor Changes
