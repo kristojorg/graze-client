@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.6.5
+
+### Patch Changes
+
+- Filter out null values from and and or filters
+
 ## 0.6.4
 
 ### Patch Changes
