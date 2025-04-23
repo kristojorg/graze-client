@@ -14,27 +14,31 @@ import {
   TextMatchesNone,
 } from "./schema/index.js";
 
-const and = (...filters: Filter[]) => {
+const and = (...filters: (Filter | null)[]): Filter => {
   const flatFilters: Filter[] = [];
-  filters.forEach((f) => {
-    if ("and" in f) {
-      // Automatically flatten nested ands.
-      flatFilters.push(...f.and);
-    } else {
-      flatFilters.push(f);
-    }
-  });
+  filters
+    .filter((f) => f !== null)
+    .forEach((f) => {
+      if ("and" in f) {
+        // Automatically flatten nested ands.
+        flatFilters.push(...f.and);
+      } else {
+        flatFilters.push(f);
+      }
+    });
   return { and: flatFilters };
 };
-const or = (...filters: Filter[]) => {
+const or = (...filters: (Filter | null)[]): Filter => {
   const flatFilters: Filter[] = [];
-  filters.forEach((f) => {
-    if ("or" in f) {
-      flatFilters.push(...f.or);
-    } else {
-      flatFilters.push(f);
-    }
-  });
+  filters
+    .filter((f) => f !== null)
+    .forEach((f) => {
+      if ("or" in f) {
+        flatFilters.push(...f.or);
+      } else {
+        flatFilters.push(f);
+      }
+    });
   return { or: flatFilters };
 };
 
@@ -129,7 +133,7 @@ const attributeCompare = (
   attribute_compare: [attr, op, value],
 });
 
-const isPost: Filter = postTypeIsNot("reply");
+const isPost: Filter = postTypeIsNot("reply", "quote");
 const isReply: Filter = postTypeIs("reply");
 const isQuote: Filter = postTypeIs("quote");
 const isNotReply: Filter = postTypeIsNot("reply");
