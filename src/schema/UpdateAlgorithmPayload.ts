@@ -225,7 +225,9 @@ export type Description = typeof Description.Type;
 export const Order = S.Union(
   S.Literal("new"),
   S.Literal("trending"),
-  S.Literal("blend")
+  S.Literal("blend"),
+  S.Literal("hackernews"),
+  S.Literal("old")
 );
 export type Order = typeof Order.Type;
 
