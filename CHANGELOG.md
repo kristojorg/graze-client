@@ -1,5 +1,12 @@
 # graze-client
 
+## 0.6.6
+
+### Patch Changes
+
+- Add hacker news order.
+  Update and block to use `neverMatch` when there are no filters passed.
+
 ## 0.6.5
 
 ### Patch Changes
