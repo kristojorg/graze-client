@@ -14,18 +14,23 @@ import {
   TextMatchesNone,
 } from "./schema/index.js";
 
+const neverMatch: Filter = {
+  or: [],
+};
+
 const and = (...filters: (Filter | null)[]): Filter => {
   const flatFilters: Filter[] = [];
-  filters
-    .filter((f) => f !== null)
-    .forEach((f) => {
-      if ("and" in f) {
-        // Automatically flatten nested ands.
-        flatFilters.push(...f.and);
-      } else {
-        flatFilters.push(f);
-      }
-    });
+  filters.forEach((f) => {
+    if (f === null) {
+      // if the filter is null, we never want to match this block.
+      flatFilters.push(neverMatch);
+    } else if ("and" in f) {
+      // Automatically flatten nested ands.
+      flatFilters.push(...f.and);
+    } else {
+      flatFilters.push(f);
+    }
+  });
   return { and: flatFilters };
 };
 const or = (...filters: (Filter | null)[]): Filter => {
