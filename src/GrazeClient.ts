@@ -19,8 +19,11 @@ import { Config, Data, Effect, Redacted, Schema } from "effect";
 
 import * as Form from "./schema/UpdateAlgorithmPayload.js";
 import {
+  CreateStickyPostBody,
   GetStickyPostsBody,
-  UpdateStickyPostsBody,
+  StickyPostIdParam,
+  StickyPostSuccess,
+  StickyType,
 } from "src/schema/StickyPosts.js";
 
 function isStringOrBlob(val: unknown): val is string | Blob {
@@ -82,20 +85,35 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
   )
   .add(
     HttpApiEndpoint.post(
-      "updateStickyPosts"
+      "createStickyPost"
     )`/app/api/v1/feed-management/sticky-posts`
-      .setPayload(UpdateStickyPostsBody)
-      .addSuccess(
-        Schema.Struct({
-          message: Schema.String,
-        })
-      )
+      .setPayload(CreateStickyPostBody)
+      .addSuccess(StickyPostSuccess)
   )
   .add(
     HttpApiEndpoint.get(
       "getStickyPosts"
     )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}`.addSuccess(
       GetStickyPostsBody
+    )
+  )
+  .add(
+    HttpApiEndpoint.put(
+      "updateStickyPost"
+    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}/${StickyPostIdParam}`
+      .setUrlParams(
+        Schema.Struct({
+          is_active: Schema.BooleanFromString,
+          sticky_type: StickyType,
+        })
+      )
+      .addSuccess(StickyPostSuccess)
+  )
+  .add(
+    HttpApiEndpoint.del(
+      "deleteStickyPost"
+    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}/${StickyPostIdParam}`.addSuccess(
+      StickyPostSuccess
     )
   );
 
