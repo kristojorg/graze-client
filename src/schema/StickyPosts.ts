@@ -24,7 +24,7 @@ const StickyPostBase = S.Struct({
 export const CreateStickyPostBody = S.Struct({
   algo_id: S.Number,
   post_url: S.String,
-  stopping_criteria: StoppingCriteria,
+  stopping_criteria: StoppingCriteria.pipe(S.optional),
   ...StickyPostBase.fields,
 });
 export type CreateStickyPostBody = typeof CreateStickyPostBody.Type;
@@ -34,7 +34,7 @@ export const GetStickyPostsBody = S.Struct({
     S.Struct({
       id: S.Number,
       ...StickyPostBase.fields,
-      stopping_criteria: StoppingCriteria,
+      stopping_criteria: StoppingCriteria.pipe(S.optional),
       hidden: S.Boolean,
       uri: S.String,
       post: Post,

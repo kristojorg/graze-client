@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.7.1
+
+### Patch Changes
+
+- Make stopping criteria optional for sticky posts
+
 ## 0.7.0
 
 ### Minor Changes
