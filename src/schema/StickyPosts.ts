@@ -9,7 +9,7 @@ export const StickyPostIdParam = HttpApiSchema.param(
 export type StickyPostIdParam = typeof StickyPostIdParam.Type;
 
 export const StoppingCriteria = S.Struct({
-  expiration_time: S.Number,
+  expiration_time: S.Number.pipe(S.optional),
 });
 export type StoppingCriteria = typeof StoppingCriteria.Type;
 

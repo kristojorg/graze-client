@@ -18,13 +18,8 @@ import {
 import { Config, Data, Effect, Redacted, Schema } from "effect";
 
 import * as Form from "./schema/UpdateAlgorithmPayload.js";
-import {
-  CreateStickyPostBody,
-  GetStickyPostsBody,
-  StickyPostIdParam,
-  StickyPostSuccess,
-  StickyType,
-} from "./schema/StickyPosts.js";
+import { FeedIdParam, UserIdParam } from "./common.js";
+import { StickyPostsApiGroup } from "./stickyposts.js";
 
 function isStringOrBlob(val: unknown): val is string | Blob {
   return typeof val === "string" || val instanceof Blob;
@@ -44,9 +39,6 @@ const encodeForm = (obj: Form.FullForm) =>
     }
     return formData;
   });
-
-const UserIdParam = HttpApiSchema.param("userId", Schema.NumberFromString);
-const FeedIdParam = HttpApiSchema.param("feedId", Schema.NumberFromString);
 
 const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
   .add(
@@ -82,43 +74,11 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
     HttpApiEndpoint.post("unhidePost")`/app/unhide_post`
       .setPayload(UnhidePostBody)
       .addSuccess(Schema.Unknown)
-  )
-  .add(
-    HttpApiEndpoint.post(
-      "createStickyPost"
-    )`/app/api/v1/feed-management/sticky-posts`
-      .setPayload(CreateStickyPostBody)
-      .addSuccess(StickyPostSuccess)
-  )
-  .add(
-    HttpApiEndpoint.get(
-      "getStickyPosts"
-    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}`.addSuccess(
-      GetStickyPostsBody
-    )
-  )
-  .add(
-    HttpApiEndpoint.put(
-      "updateStickyPost"
-    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}/${StickyPostIdParam}`
-      .setUrlParams(
-        Schema.Struct({
-          is_active: Schema.BooleanFromString,
-          sticky_type: StickyType,
-        })
-      )
-      .addSuccess(StickyPostSuccess)
-  )
-  .add(
-    HttpApiEndpoint.del(
-      "deleteStickyPost"
-    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}/${StickyPostIdParam}`.addSuccess(
-      StickyPostSuccess
-    )
   );
 
 class GrazeApiDef extends HttpApi.make("grazeApi")
   .add(GrazeApiGroup)
+  .add(StickyPostsApiGroup)
   .addError(Schema.Unknown) {}
 
 const grazeLive = Effect.gen(function* () {
