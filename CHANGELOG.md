@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.7.2
+
+### Patch Changes
+
+- Fix absolute import
+
 ## 0.7.1
 
 ### Patch Changes
