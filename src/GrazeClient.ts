@@ -24,7 +24,7 @@ import {
   StickyPostIdParam,
   StickyPostSuccess,
   StickyType,
-} from "src/schema/StickyPosts.js";
+} from "./schema/StickyPosts.js";
 
 function isStringOrBlob(val: unknown): val is string | Blob {
   return typeof val === "string" || val instanceof Blob;
