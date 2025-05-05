@@ -18,13 +18,17 @@ import {
 import { Config, Data, Effect, Redacted, Schema } from "effect";
 
 import * as Form from "./schema/UpdateAlgorithmPayload.js";
+import {
+  GetStickyPostsBody,
+  UpdateStickyPostsBody,
+} from "src/schema/StickyPosts.js";
 
 function isStringOrBlob(val: unknown): val is string | Blob {
   return typeof val === "string" || val instanceof Blob;
 }
 
 const encodeForm = (obj: Form.FullForm) =>
-  Effect.gen(function*() {
+  Effect.gen(function* () {
     const encoded = yield* Schema.encode(Form.FullForm)(obj);
     const formData = new FormData();
     for (const key in encoded) {
@@ -75,11 +79,31 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
     HttpApiEndpoint.post("unhidePost")`/app/unhide_post`
       .setPayload(UnhidePostBody)
       .addSuccess(Schema.Unknown)
+  )
+  .add(
+    HttpApiEndpoint.post(
+      "updateStickyPosts"
+    )`/app/api/v1/feed-management/sticky-posts`
+      .setPayload(UpdateStickyPostsBody)
+      .addSuccess(
+        Schema.Struct({
+          message: Schema.String,
+        })
+      )
+  )
+  .add(
+    HttpApiEndpoint.get(
+      "getStickyPosts"
+    )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}`.addSuccess(
+      GetStickyPostsBody
+    )
   );
 
-class GrazeApiDef extends HttpApi.make("grazeApi").add(GrazeApiGroup).addError(Schema.Unknown) { }
+class GrazeApiDef extends HttpApi.make("grazeApi")
+  .add(GrazeApiGroup)
+  .addError(Schema.Unknown) {}
 
-const grazeLive = Effect.gen(function*() {
+const grazeLive = Effect.gen(function* () {
   const baseUrl = yield* Config.url("GRAZE_API_URL");
   const cookie = yield* Config.redacted("GRAZE_COOKIE");
 
@@ -97,7 +121,7 @@ const grazeLive = Effect.gen(function*() {
   });
 
   const updateAlgorithm = (data: Form.FullForm) =>
-    Effect.gen(function*() {
+    Effect.gen(function* () {
       const formData = yield* encodeForm(data);
       return yield* client.updateAlgorithm({ payload: formData });
     });
@@ -124,4 +148,4 @@ export class GrazeError extends Data.TaggedError("GrazeError")<{
   status: number;
   statusText: string;
   json: unknown;
-}> { }
+}> {}
