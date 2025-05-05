@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.7.4
+
+### Patch Changes
+
+- Fix nullability of facets
+
 ## 0.7.3
 
 ### Patch Changes
