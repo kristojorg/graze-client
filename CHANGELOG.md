@@ -1,5 +1,12 @@
 # graze-client
 
+## 0.7.0
+
+### Minor Changes
+
+- Add delete sticky posts API
+- e79f683: Add sticky posts API
+
 ## 0.6.6
 
 ### Patch Changes
