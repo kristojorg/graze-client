@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.7.3
+
+### Patch Changes
+
+- Move sticky posts to API group
+
 ## 0.7.2
 
 ### Patch Changes
