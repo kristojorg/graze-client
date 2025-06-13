@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.7.5
+
+### Patch Changes
+
+- Mark effect and effect platform as peer deps
+
 ## 0.7.4
 
 ### Patch Changes
