@@ -14,6 +14,12 @@ export class GrazeService {
   unhidePost: Promisify<typeof GrazeClient.Service.unhidePost>;
   updateAlgorithm: Promisify<typeof GrazeClient.Service.updateAlgorithm>;
   publishAlgorithm: Promisify<typeof GrazeClient.Service.publishAlgorithm>;
+  stickyposts: {
+    get: Promisify<typeof GrazeClient.Service.stickyposts.get>;
+    create: Promisify<typeof GrazeClient.Service.stickyposts.create>;
+    delete: Promisify<typeof GrazeClient.Service.stickyposts.delete>;
+    update: Promisify<typeof GrazeClient.Service.stickyposts.update>;
+  };
 
   constructor({
     apiUrl,
@@ -42,6 +48,12 @@ export class GrazeService {
     this.unhidePost = api.unhidePost;
     this.updateAlgorithm = api.updateAlgorithm;
     this.publishAlgorithm = api.publishAlgorithm;
+    this.stickyposts = {
+      get: api.getStickyPosts,
+      create: api.createStickyPost,
+      delete: api.deleteStickyPost,
+      update: api.updateStickyPost,
+    };
   }
 }
 
@@ -61,6 +73,17 @@ const setup = Effect.gen(function* () {
   const publishAlgorithm = (
     ...args: Parameters<typeof client.publishAlgorithm>
   ) => client.publishAlgorithm(...args).pipe(Effect.runPromise);
+  const getStickyPosts = (...args: Parameters<typeof client.stickyposts.get>) =>
+    client.stickyposts.get(...args).pipe(Effect.runPromise);
+  const createStickyPost = (
+    ...args: Parameters<typeof client.stickyposts.create>
+  ) => client.stickyposts.create(...args).pipe(Effect.runPromise);
+  const deleteStickyPost = (
+    ...args: Parameters<typeof client.stickyposts.delete>
+  ) => client.stickyposts.delete(...args).pipe(Effect.runPromise);
+  const updateStickyPost = (
+    ...args: Parameters<typeof client.stickyposts.update>
+  ) => client.stickyposts.update(...args).pipe(Effect.runPromise);
 
   return {
     getFeed,
@@ -69,6 +92,10 @@ const setup = Effect.gen(function* () {
     unhidePost,
     updateAlgorithm,
     publishAlgorithm,
+    getStickyPosts,
+    createStickyPost,
+    deleteStickyPost,
+    updateStickyPost,
   };
 });
 
