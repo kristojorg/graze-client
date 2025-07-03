@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.8.0
+
+### Minor Changes
+
+- Add stick post api to TS client
+
 ## 0.7.5
 
 ### Patch Changes
