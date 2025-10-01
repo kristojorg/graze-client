@@ -30,7 +30,7 @@ const encodeForm = (obj: Form.FullForm) =>
     const encoded = yield* Schema.encode(Form.FullForm)(obj)
     const formData = new FormData()
     for (const key in encoded) {
-      if (encoded.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(encoded, key)) {
         const val = encoded[key as keyof Form.FullForm]
         if (isStringOrBlob(val)) {
           formData.append(key, val)
