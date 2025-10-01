@@ -1,4 +1,4 @@
-import { Schema as S } from "effect";
+import { Schema as S } from "effect"
 
 /**
  * Schema for Bluesky objects
@@ -13,9 +13,9 @@ export const Author = S.Struct({
   viewer: S.Any,
   createdAt: S.String,
   associated: S.Union(S.Null, S.Any),
-  displayName: S.String,
-});
-export type Author = typeof Author.Type;
+  displayName: S.String
+})
+export type Author = typeof Author.Type
 
 export const Record = S.Struct({
   tags: S.Union(S.Null, S.Any),
@@ -27,9 +27,9 @@ export const Record = S.Struct({
   facets: S.NullOr(S.Array(S.Any)),
   labels: S.Union(S.Null, S.Any),
   entities: S.Union(S.Null, S.Any),
-  createdAt: S.String,
-});
-export type Record = typeof Record.Type;
+  createdAt: S.String
+})
+export type Record = typeof Record.Type
 
 export const Post = S.Struct({
   cid: S.String,
@@ -45,6 +45,6 @@ export const Post = S.Struct({
   quoteCount: S.Number,
   replyCount: S.Number,
   threadgate: S.Union(S.Null, S.Unknown),
-  repostCount: S.Number,
-});
-export type Post = typeof Post.Type;
+  repostCount: S.Number
+})
+export type Post = typeof Post.Type

@@ -1,13 +1,13 @@
-import { HttpApiGroup, HttpApiEndpoint } from "@effect/platform";
-import { Schema } from "effect";
+import { HttpApiEndpoint, HttpApiGroup } from "@effect/platform"
+import { Schema } from "effect"
+import { FeedIdParam } from "./common.js"
 import {
   CreateStickyPostBody,
   GetStickyPostsBody,
   StickyPostIdParam,
   StickyPostSuccess,
-  StickyType,
-} from "./schema/StickyPosts.js";
-import { FeedIdParam } from "./common.js";
+  StickyType
+} from "./schema/StickyPosts.js"
 
 export const StickyPostsApiGroup = HttpApiGroup.make("stickyposts")
   .add(
@@ -29,7 +29,7 @@ export const StickyPostsApiGroup = HttpApiGroup.make("stickyposts")
       .setUrlParams(
         Schema.Struct({
           is_active: Schema.BooleanFromString,
-          sticky_type: StickyType,
+          sticky_type: StickyType
         })
       )
       .addSuccess(StickyPostSuccess)
@@ -40,4 +40,4 @@ export const StickyPostsApiGroup = HttpApiGroup.make("stickyposts")
     )`/app/api/v1/feed-management/sticky-posts/${FeedIdParam}/${StickyPostIdParam}`.addSuccess(
       StickyPostSuccess
     )
-  );
+  )

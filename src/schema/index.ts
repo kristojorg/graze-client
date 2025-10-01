@@ -1,2 +1,2 @@
-export * from "./shared.js";
-export * from "./UpdateAlgorithmPayload.js";
+export * from "./shared.js"
+export * from "./UpdateAlgorithmPayload.js"

@@ -1,4 +1,4 @@
-import {
+import type {
   AttributeComparison,
   AttributeName,
   AttributeValue,
@@ -11,148 +11,144 @@ import {
   RegexNegationMatches,
   SocialGraph,
   TextMatchesAny,
-  TextMatchesNone,
-} from "./schema/index.js";
+  TextMatchesNone
+} from "./schema/index.js"
 
 const neverMatch: Filter = {
-  or: [],
-};
+  or: []
+}
 
-const and = (...filters: (Filter | null)[]): Filter => {
-  const flatFilters: Filter[] = [];
+const and = (...filters: Array<Filter | null>): Filter => {
+  const flatFilters: Array<Filter> = []
   filters.forEach((f) => {
     if (f === null) {
       // if the filter is null, we never want to match this block.
-      flatFilters.push(neverMatch);
+      flatFilters.push(neverMatch)
     } else if ("and" in f) {
       // Automatically flatten nested ands.
-      flatFilters.push(...f.and);
+      flatFilters.push(...f.and)
     } else {
-      flatFilters.push(f);
+      flatFilters.push(f)
     }
-  });
-  return { and: flatFilters };
-};
-const or = (...filters: (Filter | null)[]): Filter => {
-  const flatFilters: Filter[] = [];
+  })
+  return { and: flatFilters }
+}
+const or = (...filters: Array<Filter | null>): Filter => {
+  const flatFilters: Array<Filter> = []
   filters
     .filter((f) => f !== null)
     .forEach((f) => {
       if ("or" in f) {
-        flatFilters.push(...f.or);
+        flatFilters.push(...f.or)
       } else {
-        flatFilters.push(f);
+        flatFilters.push(f)
       }
-    });
-  return { or: flatFilters };
-};
+    })
+  return { or: flatFilters }
+}
 
 const regexMatches = (
   attribute: RegexMatches["regex_matches"][0],
   regex: string
 ): RegexMatches => ({
-  regex_matches: [attribute, regex, true],
-});
+  regex_matches: [attribute, regex, true]
+})
 
 const regexNegationMatches = (
   attribute: RegexNegationMatches["regex_negation_matches"][0],
   regex: string
 ): RegexNegationMatches => ({
-  regex_negation_matches: [attribute, regex, true],
-});
+  regex_negation_matches: [attribute, regex, true]
+})
 
 const textMatchesAny = ({
   attribute,
-  patterns,
   caseInsensitive = true,
-  useRegex = false,
+  patterns,
+  useRegex = false
 }: {
-  attribute: AttributeName;
-  patterns: string[];
-  caseInsensitive?: boolean;
-  useRegex?: boolean;
+  attribute: AttributeName
+  patterns: Array<string>
+  caseInsensitive?: boolean
+  useRegex?: boolean
 }): TextMatchesAny => ({
-  regex_any: [attribute, patterns, caseInsensitive, useRegex],
-});
+  regex_any: [attribute, patterns, caseInsensitive, useRegex]
+})
 
 const textMatchesNone = ({
   attribute,
-  patterns,
   caseInsensitive = true,
-  useRegex = false,
+  patterns,
+  useRegex = false
 }: {
-  attribute: AttributeName;
-  patterns: string[];
-  caseInsensitive?: boolean;
-  useRegex?: boolean;
+  attribute: AttributeName
+  patterns: Array<string>
+  caseInsensitive?: boolean
+  useRegex?: boolean
 }): TextMatchesNone => ({
-  regex_none: [attribute, patterns, caseInsensitive, useRegex],
-});
+  regex_none: [attribute, patterns, caseInsensitive, useRegex]
+})
 
 const isListMember = (uri: string): ListMemberFilter => ({
-  list_member: [uri, "in"],
-});
+  list_member: [uri, "in"]
+})
 const isNotListMember = (uri: string): ListMemberFilter => ({
-  list_member: [uri, "not_in"],
-});
+  list_member: [uri, "not_in"]
+})
 const socialGraph = (
   identifier: string,
   op: SocialGraph["social_graph"][1],
   relation: SocialGraph["social_graph"][2]
 ): SocialGraph => ({
-  social_graph: [identifier, op, relation],
-});
-const posterIsFollowedBy = (identifier: string) =>
-  socialGraph(identifier, "in", "followers");
-const posterFollows = (identifier: string) =>
-  socialGraph(identifier, "in", "follows");
-const posterIsNotFollowedBy = (identifier: string) =>
-  socialGraph(identifier, "not_in", "followers");
-const posterDoesNotFollow = (identifier: string) =>
-  socialGraph(identifier, "not_in", "follows");
+  social_graph: [identifier, op, relation]
+})
+const posterIsFollowedBy = (identifier: string) => socialGraph(identifier, "in", "followers")
+const posterFollows = (identifier: string) => socialGraph(identifier, "in", "follows")
+const posterIsNotFollowedBy = (identifier: string) => socialGraph(identifier, "not_in", "followers")
+const posterDoesNotFollow = (identifier: string) => socialGraph(identifier, "not_in", "follows")
 
 const embedContains = (type: EmbedType["embed_type"][1]): Filter => ({
-  embed_type: ["==", type],
-});
+  embed_type: ["==", type]
+})
 const embedDoesNotContain = (type: EmbedType["embed_type"][1]): Filter => ({
-  embed_type: ["!=", type],
-});
+  embed_type: ["!=", type]
+})
 
 const postTypeIs = (...types: PostTypeFilter["post_type"][1]): Filter => ({
-  post_type: ["in", types],
-});
+  post_type: ["in", types]
+})
 const postTypeIsNot = (...types: PostTypeFilter["post_type"][1]): Filter => ({
-  post_type: ["not_in", types],
-});
+  post_type: ["not_in", types]
+})
 
-const hasVideo: Filter = embedContains("video");
+const hasVideo: Filter = embedContains("video")
 
 const hasNoNSFWLabels: Filter = {
-  entity_excludes: ["labels", ["porn", "sexual", "nudity"]],
-};
+  entity_excludes: ["labels", ["porn", "sexual", "nudity"]]
+}
 const attributeCompare = (
   attr: AttributeName,
   op: AttributeComparison,
   value: AttributeValue
 ): Filter => ({
-  attribute_compare: [attr, op, value],
-});
+  attribute_compare: [attr, op, value]
+})
 
-const isPost: Filter = postTypeIsNot("reply", "quote");
-const isReply: Filter = postTypeIs("reply");
-const isQuote: Filter = postTypeIs("quote");
-const isNotReply: Filter = postTypeIsNot("reply");
-const isNotQuote: Filter = postTypeIsNot("quote");
+const isPost: Filter = postTypeIsNot("reply", "quote")
+const isReply: Filter = postTypeIs("reply")
+const isQuote: Filter = postTypeIs("quote")
+const isNotReply: Filter = postTypeIsNot("reply")
+const isNotQuote: Filter = postTypeIsNot("quote")
 
 const isContentOk = (threshold: number = 0.9): ContentModerationBlock => ({
-  content_moderation: ["OK", ">=", threshold],
-});
+  content_moderation: ["OK", ">=", threshold]
+})
 
 export const Algo = {
-  filter: (...filters: Filter[]): { filter: Filter } => ({
-    filter: and(...filters),
-  }),
-};
+  filter: (...filters: Array<Filter>): { filter: Filter } => ({
+    filter: and(...filters)
+  })
+}
 
 export const F = {
   and,
@@ -180,5 +176,5 @@ export const F = {
   isNotQuote,
   isContentOk,
   embedContains,
-  embedDoesNotContain,
-};
+  embedDoesNotContain
+}

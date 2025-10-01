@@ -1,11 +1,4 @@
 import {
-  AlgoUpdateResponse,
-  GetAlgoResponse,
-  GetAlgorithmsResponse,
-  HidePostBody,
-  UnhidePostBody,
-} from "./schema/shared.js";
-import {
   FetchHttpClient,
   HttpApi,
   HttpApiClient,
@@ -13,32 +6,39 @@ import {
   HttpApiGroup,
   HttpApiSchema,
   HttpClient,
-  HttpClientRequest,
-} from "@effect/platform";
-import { Config, Data, Effect, Redacted, Schema } from "effect";
+  HttpClientRequest
+} from "@effect/platform"
+import { Config, Data, Effect, Redacted, Schema } from "effect"
+import {
+  AlgoUpdateResponse,
+  GetAlgoResponse,
+  GetAlgorithmsResponse,
+  HidePostBody,
+  UnhidePostBody
+} from "./schema/shared.js"
 
-import * as Form from "./schema/UpdateAlgorithmPayload.js";
-import { FeedIdParam, UserIdParam } from "./common.js";
-import { StickyPostsApiGroup } from "./stickyposts.js";
+import { FeedIdParam, UserIdParam } from "./common.js"
+import * as Form from "./schema/UpdateAlgorithmPayload.js"
+import { StickyPostsApiGroup } from "./stickyposts.js"
 
 function isStringOrBlob(val: unknown): val is string | Blob {
-  return typeof val === "string" || val instanceof Blob;
+  return typeof val === "string" || val instanceof Blob
 }
 
 const encodeForm = (obj: Form.FullForm) =>
-  Effect.gen(function* () {
-    const encoded = yield* Schema.encode(Form.FullForm)(obj);
-    const formData = new FormData();
+  Effect.gen(function*() {
+    const encoded = yield* Schema.encode(Form.FullForm)(obj)
+    const formData = new FormData()
     for (const key in encoded) {
       if (encoded.hasOwnProperty(key)) {
-        const val = encoded[key as keyof Form.FullForm];
+        const val = encoded[key as keyof Form.FullForm]
         if (isStringOrBlob(val)) {
-          formData.append(key, val);
+          formData.append(key, val)
         }
       }
     }
-    return formData;
-  });
+    return formData
+  })
 
 const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
   .add(
@@ -46,7 +46,7 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
       .addSuccess(GetAlgorithmsResponse)
       .setPayload(
         Schema.Struct({
-          user_id: UserIdParam,
+          user_id: UserIdParam
         })
       )
   )
@@ -74,16 +74,17 @@ const GrazeApiGroup = HttpApiGroup.make("graze", { topLevel: true })
     HttpApiEndpoint.post("unhidePost")`/app/unhide_post`
       .setPayload(UnhidePostBody)
       .addSuccess(Schema.Unknown)
-  );
+  )
 
 class GrazeApiDef extends HttpApi.make("grazeApi")
   .add(GrazeApiGroup)
   .add(StickyPostsApiGroup)
-  .addError(Schema.Unknown) {}
+  .addError(Schema.Unknown)
+{}
 
-const grazeLive = Effect.gen(function* () {
-  const baseUrl = yield* Config.url("GRAZE_API_URL");
-  const cookie = yield* Config.redacted("GRAZE_COOKIE");
+const grazeLive = Effect.gen(function*() {
+  const baseUrl = yield* Config.url("GRAZE_API_URL")
+  const cookie = yield* Config.redacted("GRAZE_COOKIE")
 
   const client = yield* HttpApiClient.make(GrazeApiDef, {
     baseUrl: baseUrl.toString(),
@@ -92,38 +93,38 @@ const grazeLive = Effect.gen(function* () {
         HttpClient.filterStatusOk,
         HttpClient.mapRequest(
           HttpClientRequest.setHeaders({
-            cookie: Redacted.value(cookie),
+            cookie: Redacted.value(cookie)
           })
         )
-      ),
-  });
+      )
+  })
 
   const updateAlgorithm = (data: Form.FullForm) =>
-    Effect.gen(function* () {
-      const formData = yield* encodeForm(data);
-      return yield* client.updateAlgorithm({ payload: formData });
-    });
+    Effect.gen(function*() {
+      const formData = yield* encodeForm(data)
+      return yield* client.updateAlgorithm({ payload: formData })
+    })
 
-  const userId = yield* Config.integer("GRAZE_USER_ID");
-  const getFeeds = () => client.getFeeds({ payload: { user_id: userId } });
+  const userId = yield* Config.integer("GRAZE_USER_ID")
+  const getFeeds = () => client.getFeeds({ payload: { user_id: userId } })
 
   return {
     ...client,
     updateAlgorithm,
-    getFeeds,
-  };
-});
+    getFeeds
+  }
+})
 
 export class GrazeClient extends Effect.Service<GrazeClient>()("GrazeClient", {
   effect: grazeLive,
-  dependencies: [FetchHttpClient.layer],
+  dependencies: [FetchHttpClient.layer]
 }) {
   // TODO: test service
 }
 
 export class GrazeError extends Data.TaggedError("GrazeError")<{
-  message: string;
-  status: number;
-  statusText: string;
-  json: unknown;
+  message: string
+  status: number
+  statusText: string
+  json: unknown
 }> {}

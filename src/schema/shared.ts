@@ -1,4 +1,4 @@
-import { Schema as S } from "effect";
+import { Schema as S } from "effect"
 
 export const PartialAlgorithm = S.Struct({
   algorithm_uri: S.String,
@@ -20,46 +20,46 @@ export const PartialAlgorithm = S.Struct({
   id: S.Number,
   created_at: S.DateFromString,
   updated_at: S.DateFromString,
-  deleted_at: S.Union(S.DateFromString, S.Null),
-});
-export type PartialAlgorithm = typeof PartialAlgorithm.Type;
+  deleted_at: S.Union(S.DateFromString, S.Null)
+})
+export type PartialAlgorithm = typeof PartialAlgorithm.Type
 
-const Stats = S.Unknown;
-const LatestError = S.Unknown;
+const Stats = S.Unknown
+const LatestError = S.Unknown
 
 const FullAlgorithm = S.Struct({
   ...PartialAlgorithm.fields,
   stats: Stats,
   latest_error: LatestError,
   latest_compute_cycle: S.Unknown,
-  subscriber_lists: S.Unknown,
-});
+  subscriber_lists: S.Unknown
+})
 const FullAlgorithmWithManifest = S.Struct({
   ...FullAlgorithm.fields,
   draft_algorithm_manifest: S.Unknown,
-  algorithm_manifest: S.Unknown,
-});
+  algorithm_manifest: S.Unknown
+})
 
 export const AlgoUpdateResponse = S.Struct({
   message: S.String,
-  algorithm: PartialAlgorithm,
-});
-export type AlgoUpdateResponse = typeof AlgoUpdateResponse.Type;
+  algorithm: PartialAlgorithm
+})
+export type AlgoUpdateResponse = typeof AlgoUpdateResponse.Type
 
-export const GetAlgoResponse = S.parseJson(FullAlgorithmWithManifest);
-export type GetAlgoResponse = typeof GetAlgoResponse.Type;
+export const GetAlgoResponse = S.parseJson(FullAlgorithmWithManifest)
+export type GetAlgoResponse = typeof GetAlgoResponse.Type
 
 export const HidePostBody = S.Struct({
   algo_id: S.Number,
-  at_uri: S.String,
-});
-export type HidePostBody = typeof HidePostBody.Type;
+  at_uri: S.String
+})
+export type HidePostBody = typeof HidePostBody.Type
 
 export const UnhidePostBody = S.Struct({
   algo_id: S.Number,
-  at_uri: S.String,
-});
-export type UnhidePostBody = typeof UnhidePostBody.Type;
+  at_uri: S.String
+})
+export type UnhidePostBody = typeof UnhidePostBody.Type
 
 // ----------------------- Get Algorithms Response -----------------------
 
@@ -68,15 +68,15 @@ export const AlgorithWithStats = S.Struct({
   stats: S.Struct({
     page_renders: S.Number,
     unique_users: S.Number,
-    post_renders: S.Number,
-  }),
-});
-export type AlgorithmWithStats = typeof AlgorithWithStats.Type;
+    post_renders: S.Number
+  })
+})
+export type AlgorithmWithStats = typeof AlgorithWithStats.Type
 export const GetAlgorithmsResponse = S.Struct({
   page: S.Number,
   page_size: S.Number,
   total_items: S.Number,
   total_pages: S.Number,
-  user_algos: S.Array(AlgorithWithStats),
-});
-export type GetAlgorithmsResponse = typeof GetAlgorithmsResponse.Type;
+  user_algos: S.Array(AlgorithWithStats)
+})
+export type GetAlgorithmsResponse = typeof GetAlgorithmsResponse.Type
