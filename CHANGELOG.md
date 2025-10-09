@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.8.1
+
+### Patch Changes
+
+- Add additional literals
+
 ## 0.8.0
 
 ### Minor Changes
