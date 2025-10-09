@@ -3,7 +3,7 @@ import { GrazeClient } from "./GrazeClient.js"
 
 type Promisify<T> = T extends (
   ...args: Array<any>
-) => Effect.Effect<infer A, infer E, never> ? (...args: Parameters<T>) => Promise<A>
+) => Effect.Effect<infer A, infer _E, never> ? (...args: Parameters<T>) => Promise<A>
   : never
 
 export class GrazeService {

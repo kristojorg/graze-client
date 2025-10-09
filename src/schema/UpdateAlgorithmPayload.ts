@@ -9,19 +9,25 @@ export const AttributeName = S.Union(
   S.Literal("text"),
   S.Literal("reply"),
   S.Literal("embed.images[*].alt"),
+  S.Literal("embed.media.images[*].alt"),
   S.Literal("embed.alt"),
   S.Literal("embed"),
   S.Literal("embed.external.uri"),
   S.Literal("embed.external.title"),
   S.Literal("embed.external.description"),
-  S.Literal("embed.images[*].alt"),
   S.Literal("embed.media.external.uri"),
   S.Literal("embed.media.external.title"),
   S.Literal("embed.media.external.description"),
   S.Literal("embed.record.uri"),
-  S.Literal("langs[*"),
+  S.Literal("langs[*]"),
   S.Literal("labels.values[*].val"),
-  S.Literal("facets[*].features[*].uri")
+  S.Literal("facets[*].features[*].uri"),
+  S.Literal("hydrated_metadata.user.did"),
+  S.Literal("hydrated_metadata.user.handle"),
+  S.Literal("hydrated_metadata.user.description"),
+  S.Literal("hydrated_metadata.user.display_name"),
+  S.Literal("hydrated_metadata.user.labels"),
+  S.Literal("hydrated_metadata.mentions.display_name")
 )
 export type AttributeName = typeof AttributeName.Type
 export const AttributeComparison = S.Literal("==", "!=", ">", "<", ">=", "<=")
