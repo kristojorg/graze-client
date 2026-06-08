@@ -1,4 +1,4 @@
-import { Schema as S } from "effect"
+import { Schema as S } from "effect";
 
 /**
  * Schema for Bluesky objects
@@ -12,24 +12,24 @@ export const Author = S.Struct({
   labels: S.Array(S.Any),
   viewer: S.Any,
   createdAt: S.String,
-  associated: S.Union(S.Null, S.Any),
-  displayName: S.String
-})
-export type Author = typeof Author.Type
+  associated: S.Union([S.Null, S.Any]),
+  displayName: S.String,
+});
+export type Author = typeof Author.Type;
 
 export const Record = S.Struct({
-  tags: S.Union(S.Null, S.Any),
+  tags: S.Union([S.Null, S.Any]),
   text: S.String,
   $type: S.String,
   embed: S.Any,
   langs: S.NullOr(S.Array(S.String)),
-  reply: S.Union(S.Null, S.Any),
+  reply: S.Union([S.Null, S.Any]),
   facets: S.NullOr(S.Array(S.Any)),
-  labels: S.Union(S.Null, S.Any),
-  entities: S.Union(S.Null, S.Any),
-  createdAt: S.String
-})
-export type Record = typeof Record.Type
+  labels: S.Union([S.Null, S.Any]),
+  entities: S.Union([S.Null, S.Any]),
+  createdAt: S.String,
+});
+export type Record = typeof Record.Type;
 
 export const Post = S.Struct({
   cid: S.String,
@@ -44,7 +44,7 @@ export const Post = S.Struct({
   likeCount: S.Number,
   quoteCount: S.Number,
   replyCount: S.Number,
-  threadgate: S.Union(S.Null, S.Unknown),
-  repostCount: S.Number
-})
-export type Post = typeof Post.Type
+  threadgate: S.Union([S.Null, S.Unknown]),
+  repostCount: S.Number,
+});
+export type Post = typeof Post.Type;

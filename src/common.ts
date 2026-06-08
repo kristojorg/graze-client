@@ -1,11 +1,6 @@
-import { HttpApiSchema } from "@effect/platform"
-import { Schema } from "effect"
+import { Schema } from "effect";
 
-export const UserIdParam = HttpApiSchema.param(
-  "userId",
-  Schema.NumberFromString
-)
-export const FeedIdParam = HttpApiSchema.param(
-  "feedId",
-  Schema.NumberFromString
-)
+// v4 has no `HttpApiSchema.param`: path params are declared inline in the
+// endpoint path (`:feedId`) with a `params: { feedId: FeedIdParam }` schema map.
+export const UserIdParam = Schema.NumberFromString;
+export const FeedIdParam = Schema.NumberFromString;
