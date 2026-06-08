@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.9.0
+
+### Breaking Changes
+
+- Effect v4 migration
+
 ## 0.8.1
 
 ### Patch Changes
