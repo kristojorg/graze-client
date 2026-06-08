@@ -60,10 +60,10 @@
     "@changesets/changelog-git": "^0.2.0",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.8",
-    "@effect/build-utils": "^0.7.7",
-    "@effect/eslint-plugin": "^0.2.0",
-    "@effect/language-service": "^0.1.0",
-    "@effect/vitest": "latest",
+    "@effect/build-utils": "^0.8.9",
+    "@effect/eslint-plugin": "^0.3.2",
+    "@effect/language-service": "^0.86.2",
+    "@effect/vitest": "4.0.0-beta.71",
     "@eslint/compat": "1.1.1",
     "@eslint/eslintrc": "3.1.0",
     "@eslint/js": "9.10.0",
@@ -79,7 +79,7 @@
     "eslint-plugin-sort-destructure-keys": "^2.0.0",
     "tsx": "^4.17.0",
     "typescript": "^5.6.2",
-    "vitest": "^2.0.5",
+    "vitest": "^3.2.4",
     "effect": "4.0.0-beta.71"
   },
   "packageManager": "pnpm@10.18.1+sha512.77a884a165cbba2d8d1c19e3b4880eee6d2fcabd0d879121e282196b80042351d5eb3ca0935fa599da1dc51265cc68816ad2bddd2a2de5ea9fdf92adbec7cd34"
