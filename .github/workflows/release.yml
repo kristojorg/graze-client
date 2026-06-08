@@ -11,18 +11,23 @@ permissions: {}
 
 jobs:
   release:
-    if: github.repository_owner == 'Effect-Ts'
+    if: github.repository_owner == 'kristojorg'
     name: Release
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: write
-      id-token: write
-      pull-requests: write
+      contents: write # create the version PR / git tags
+      id-token: write # mint the OIDC token for npm trusted publishing
+      pull-requests: write # open/update the "Version Packages" PR
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2 # build/test scripts shell out to bun
       - name: Install dependencies
         uses: ./.github/actions/setup
+        with:
+          node-version: "24" # OIDC requires Node >= 22.14.0
+      - name: Ensure npm supports OIDC trusted publishing
+        run: npm install -g npm@latest # trusted publishing needs npm >= 11.5.1
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
@@ -31,4 +36,4 @@ jobs:
           publish: pnpm changeset-publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # No NPM_TOKEN — auth comes from the OIDC id-token above.
