@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.10.0
+
+### Minor Changes
+
+- 164c2c9: Run on Effect `4.0.0-rc.116`: `GrazeClient` reads its config with `Config.URL`, `Config.Redacted` and `Config.Int`, which replaced the lowercase constructors. The peer dependency is now `effect@^4.0.0-rc.116`. `graze-client/schema` also exports the sticky-post schemas.
+
 ## 0.9.0
 
 ### Breaking Changes
