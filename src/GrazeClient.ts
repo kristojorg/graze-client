@@ -85,8 +85,8 @@ class GrazeApiDef extends HttpApi.make("grazeApi")
   .add(StickyPostsApiGroup) {}
 
 const grazeLive = Effect.gen(function* () {
-  const baseUrl = yield* Config.url("GRAZE_API_URL");
-  const cookie = yield* Config.redacted("GRAZE_COOKIE");
+  const baseUrl = yield* Config.URL("GRAZE_API_URL");
+  const cookie = yield* Config.Redacted("GRAZE_COOKIE");
 
   const client = yield* HttpApiClient.make(GrazeApiDef, {
     baseUrl: baseUrl.toString(),
@@ -107,7 +107,7 @@ const grazeLive = Effect.gen(function* () {
       return yield* client.updateAlgorithm({ payload: formData });
     });
 
-  const userId = yield* Config.int("GRAZE_USER_ID");
+  const userId = yield* Config.Int("GRAZE_USER_ID");
   const getFeeds = () => client.getFeeds({ query: { user_id: userId } });
 
   return {
