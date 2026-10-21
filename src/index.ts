@@ -1,24 +1,20 @@
 import { ConfigProvider, Effect } from "effect";
-import { GrazeClient, type GrazeClientService } from "./GrazeClient.js";
+import { GrazeClient } from "./GrazeClient.js";
 
-type Promisify<T> = T extends (
-  ...args: Array<any>
-) => Effect.Effect<infer A, infer _E, never>
-  ? (...args: Parameters<T>) => Promise<A>
-  : never;
+type GrazePromiseApi = Effect.Success<typeof setup>;
 
 export class GrazeService {
-  getFeed: Promisify<GrazeClientService["getFeed"]>;
-  getFeeds: Promisify<GrazeClientService["getFeeds"]>;
-  hidePost: Promisify<GrazeClientService["hidePost"]>;
-  unhidePost: Promisify<GrazeClientService["unhidePost"]>;
-  updateAlgorithm: Promisify<GrazeClientService["updateAlgorithm"]>;
-  publishAlgorithm: Promisify<GrazeClientService["publishAlgorithm"]>;
+  getFeed: GrazePromiseApi["getFeed"];
+  getFeeds: GrazePromiseApi["getFeeds"];
+  hidePost: GrazePromiseApi["hidePost"];
+  unhidePost: GrazePromiseApi["unhidePost"];
+  updateAlgorithm: GrazePromiseApi["updateAlgorithm"];
+  publishAlgorithm: GrazePromiseApi["publishAlgorithm"];
   stickyposts: {
-    get: Promisify<GrazeClientService["stickyposts"]["get"]>;
-    create: Promisify<GrazeClientService["stickyposts"]["create"]>;
-    delete: Promisify<GrazeClientService["stickyposts"]["delete"]>;
-    update: Promisify<GrazeClientService["stickyposts"]["update"]>;
+    get: GrazePromiseApi["getStickyPosts"];
+    create: GrazePromiseApi["createStickyPost"];
+    delete: GrazePromiseApi["deleteStickyPost"];
+    update: GrazePromiseApi["updateStickyPost"];
   };
 
   constructor({
@@ -64,30 +60,34 @@ export class GrazeService {
 
 const setup = Effect.gen(function* () {
   const client = yield* GrazeClient;
-  const getFeed = (...args: Parameters<typeof client.getFeed>) =>
-    client.getFeed(...args).pipe(Effect.runPromise);
+  const getFeed = (
+    ...args: Parameters<typeof client.getFeed<"decoded-only">>
+  ) => client.getFeed(...args).pipe(Effect.runPromise);
   const getFeeds = (...args: Parameters<typeof client.getFeeds>) =>
     client.getFeeds(...args).pipe(Effect.runPromise);
-  const hidePost = (...args: Parameters<typeof client.hidePost>) =>
-    client.hidePost(...args).pipe(Effect.runPromise);
-  const unhidePost = (...args: Parameters<typeof client.unhidePost>) =>
-    client.unhidePost(...args).pipe(Effect.runPromise);
+  const hidePost = (
+    ...args: Parameters<typeof client.hidePost<"decoded-only">>
+  ) => client.hidePost(...args).pipe(Effect.runPromise);
+  const unhidePost = (
+    ...args: Parameters<typeof client.unhidePost<"decoded-only">>
+  ) => client.unhidePost(...args).pipe(Effect.runPromise);
   const updateAlgorithm = (
     ...args: Parameters<typeof client.updateAlgorithm>
   ) => client.updateAlgorithm(...args).pipe(Effect.runPromise);
   const publishAlgorithm = (
-    ...args: Parameters<typeof client.publishAlgorithm>
+    ...args: Parameters<typeof client.publishAlgorithm<"decoded-only">>
   ) => client.publishAlgorithm(...args).pipe(Effect.runPromise);
-  const getStickyPosts = (...args: Parameters<typeof client.stickyposts.get>) =>
-    client.stickyposts.get(...args).pipe(Effect.runPromise);
+  const getStickyPosts = (
+    ...args: Parameters<typeof client.stickyposts.get<"decoded-only">>
+  ) => client.stickyposts.get(...args).pipe(Effect.runPromise);
   const createStickyPost = (
-    ...args: Parameters<typeof client.stickyposts.create>
+    ...args: Parameters<typeof client.stickyposts.create<"decoded-only">>
   ) => client.stickyposts.create(...args).pipe(Effect.runPromise);
   const deleteStickyPost = (
-    ...args: Parameters<typeof client.stickyposts.delete>
+    ...args: Parameters<typeof client.stickyposts.delete<"decoded-only">>
   ) => client.stickyposts.delete(...args).pipe(Effect.runPromise);
   const updateStickyPost = (
-    ...args: Parameters<typeof client.stickyposts.update>
+    ...args: Parameters<typeof client.stickyposts.update<"decoded-only">>
   ) => client.stickyposts.update(...args).pipe(Effect.runPromise);
 
   return {

@@ -7,8 +7,8 @@ import {
   StickyPostSuccess,
   StickyType,
 } from "./schema/StickyPosts.js";
-import * as HttpApiEndpoint from "effect/unstable/httpapi/HttpApiEndpoint";
-import * as HttpApiGroup from "effect/unstable/httpapi/HttpApiGroup";
+import * as HttpApiEndpoint from "effect/http-api/HttpApiEndpoint";
+import * as HttpApiGroup from "effect/http-api/HttpApiGroup";
 
 // v4 dropped `Schema.BooleanFromString`; decode the query strings "true"/"false".
 const BooleanFromString = Schema.Literals(["true", "false"]).pipe(
