@@ -1,5 +1,11 @@
 # graze-client
 
+## 0.12.1
+
+### Patch Changes
+
+- 0b51ffb: The peer dependency is now `effect@^4.0.6`. 4.0.6 is the floor: earlier versions type every call as `unknown` against these declarations. A later Effect release that changes the client types shows up in the consumer's typecheck, so the range no longer stops at the next minor.
+
 ## 0.12.0
 
 ### Minor Changes
